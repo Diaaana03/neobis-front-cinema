@@ -2,7 +2,11 @@ const API = "90ed1012-b980-4434-9f47-200245f69049";
 const API_popular =
   "https://kinopoiskapiunofficial.tech/api/v2.2/films/collections?type=TOP_POPULAR_MOVIES&page=1";
 
+const API_search =
+  "https://kinopoiskapiunofficial.tech/api/v2.1/films/search-by-keyword?keyword=";
+
 getPopular(API_popular);
+
 async function getPopular(url) {
   const response = await fetch(url, {
     method: "GET",
@@ -27,6 +31,8 @@ function getClassByRate(vote) {
 
 function showPopular(data) {
   const moviesEl = document.querySelector(".movies");
+  document.querySelector(".movies").innerHTML = "";
+
   data.items.forEach((movie) => {
     const movieEl = document.createElement("div");
     movieEl.classList.add("movie");
@@ -44,6 +50,7 @@ function showPopular(data) {
         <div class="movie__category">${movie.genres.map(
           (genre) => ` ${genre.genre}`
         )}</div>
+        <div class ="movie__year">${movie.year}<div>
         ${
           movie.ratingKinopoisk &&
           `
@@ -57,3 +64,17 @@ function showPopular(data) {
     moviesEl.appendChild(movieEl);
   });
 }
+
+const form = document.querySelector("form");
+const search = document.querySelector(".header__search");
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const APIsearch = `${API_search}${search.value}`;
+  if (search.value) {
+    getPopular(APIsearch);
+
+    search.value = "";
+  }
+});
