@@ -18,12 +18,14 @@ body {
   margin: 0 auto;
 }
 
+/* Header */
+
 .header__content {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 1.6rem;
-  height: 6rem;
+  height: 8rem;
 }
 
 .header__logo {
@@ -39,6 +41,34 @@ body {
   outline: none;
 }
 
+.nav__categories {
+  display: flex;
+  align-items: center;
+}
+
+.btn_current_month,
+.btn_expected,
+.btn_best,
+.btn_upcoming_movies,
+.btn_favourites {
+  font-size: 1.5rem;
+  width: 15rem;
+  cursor: pointer;
+}
+
+.btn_current_month:hover,
+.btn_expected:hover,
+.btn_best:hover,
+.btn_upcoming_movies:hover,
+.btn_favourites:hover {
+  background-color: #e9dccd;
+}
+
+.btn_favourites {
+  height: 3.8rem;
+}
+
+/* Main section */
 .movies {
   display: flex;
   flex-wrap: wrap;

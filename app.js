@@ -11,13 +11,14 @@ const API_expected =
 const API_current_month =
   "https://kinopoiskapiunofficial.tech/api/v2.2/films/premieres?year=2024&month=JULY";
 
-const search = document.querySelector(".header__search");
+const API_upcoming =
+  "https://kinopoiskapiunofficial.tech/api/v2.1/films/releases?year=2024&month=MAY";
 
 ////// Default page
 
 getMovies(API_best);
 
-//////// Search input
+//////// Search input ?
 
 const form = document.querySelector("form");
 
@@ -53,6 +54,13 @@ btnExpected.addEventListener("click", () => {
 const currentBtn = document.querySelector(".btn_current_month");
 currentBtn.addEventListener("click", () => {
   getMovies(API_current_month);
+});
+
+////// Upcoming movies ?
+
+const upcomingBtn = document.querySelector(".btn_upcoming_movies");
+upcomingBtn.addEventListener("click", () => {
+  getMovies(API_upcoming);
 });
 
 ////// Get movies main function
