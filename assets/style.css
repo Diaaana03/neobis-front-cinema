@@ -144,13 +144,34 @@ body {
 }
 
 .movie__average--green {
-  border: 1px solid green;
+  border: 4px solid green;
 }
 
 .movie__average--orange {
-  border: 1px solid orange;
+  border: 4px solid orange;
 }
 
 .movie__average--red {
-  border: 1px solid red;
+  border: 4px solid red;
+}
+
+/* Heart button  */
+
+.heart {
+  position: absolute;
+  bottom: 4rem;
+  right: 0;
+  margin-right: 10px;
+  cursor: pointer;
+  display: inline-block;
+  width: 20px;
+  aspect-ratio: 1;
+  border-image: radial-gradient(rgb(255, 255, 255) 69%, #0000 0%) 84.5% / 50%;
+
+  clip-path: polygon(-41% 0, 50% 91%, 141% 0);
+  transition: all 0.5s ease-in-out;
+}
+
+.heart-active {
+  border-image: radial-gradient(rgb(255, 20, 20) 69%, #0000 0%) 84.5% / 50%;
 }

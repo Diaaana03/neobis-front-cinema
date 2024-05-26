@@ -119,7 +119,7 @@ function showMovies(data) {
         <div class="movie__title">${movie.nameRu}</div>
         <div class="movie__category">${movie.genres.map(
           (genre) => ` ${genre.genre}`
-        )}</div>
+        )}</div> <div class="heart heart-active" id="heart"></div>
         ${
           movie.ratingImdb &&
           `
@@ -133,3 +133,5 @@ function showMovies(data) {
     moviesEl.appendChild(movieEl);
   });
 }
+
+/////Favourites movies
