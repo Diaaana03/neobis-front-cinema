@@ -3,16 +3,14 @@ const baseUrl = "https://kinopoiskapiunofficial.tech/api/v2.1/films";
 const API_best =
   "https://kinopoiskapiunofficial.tech/api/v2.2/films/collections?type=TOP_POPULAR_MOVIES&page=1";
 
-const API_search =
-  "https://kinopoiskapiunofficial.tech/api/v2.1/films/search-by-keyword?keyword=";
+const API_search = `${baseUrl}/search-by-keyword?keyword=`;
 
 const API_expected = `${baseUrl}/top?type=TOP_AWAIT_FILMS`;
 
 const API_current_month =
   "https://kinopoiskapiunofficial.tech/api/v2.2/films/premieres?year=2024&month=JULY";
 
-const API_upcoming =
-  "https://kinopoiskapiunofficial.tech/api/v2.1/films/releases?year=2024&month=MAY";
+const API_upcoming = `${baseUrl}/releases?year=2024&month=MAY`;
 
 ////// Default page
 
@@ -108,6 +106,8 @@ function showMovies(data) {
 
   const movies = data.items || data.films || data.releases || "No movies found";
 
+  localStorage.setItem("movies", movies);
+
   movies.forEach((movie) => {
     const movieEl = document.createElement("div");
     movieEl.classList.add("movie");
@@ -124,7 +124,7 @@ function showMovies(data) {
         <div class="movie__title">${movie.nameRu}</div>
         <div class="movie__category">${movie.genres.map(
           (genre) => ` ${genre.genre}`
-        )}</div> <div class="heart heart-active" id="heart"></div>
+        )}</div> <button class="heart heart-active" id="heart"></button>
         ${
           (movie.ratingImdb &&
             `
@@ -139,33 +139,73 @@ function showMovies(data) {
       </div>
         `;
     moviesEl.appendChild(movieEl);
+    const btn_fav = document.getElementById("heart");
+    console.lof(btn_fav);
+    btn_fav.addEventListener("click", (e) => {
+      e.preventDefault();
+      console.log(e.target.value);
+      const allMovies = localStorage.getItem("movies");
+      // movies.innerHTML = "";
+      allMovies.filter((imdbId) => {
+        getFavorites(`${baseUrl}${imdbId}`);
+      });
+      console.log("favorites");
+    });
   });
 }
 
 /////Favourites movies
 
-moviesSection.addEventListener("click", (event) => {
-  if (event.target.id === "heart") {
-    event.target.classList.toggle("heart-active");
-    const movieElement = event.target.closest(".movie-container");
+const btn_fav = document.getElementById("heart");
+console.lof(btn_fav);
 
-    if (event.target.classList.contains("heart-active")) {
-      moviesIdArray.push(movieElement.getAttribute("movieId"));
-      localStorage.setItem("id", JSON.stringify(moviesIdArray));
-    } else {
-      moviesIdArray = moviesIdArray.filter(
-        (item) => item !== movieElement.getAttribute("movieId")
-      );
-      localStorage.setItem("id", JSON.stringify(moviesIdArray));
-    }
-  }
-});
+function setLikedMovies(likedMovies) {
+  localStorage.setItem("likedMovies", JSON.stringify(likedMovies));
+}
 
-favoritesBtn.addEventListener("click", (event) => {
-  event.preventDefault();
-  moviesSection.innerHTML = "";
-  moviesIdArray.forEach((id) => {
-    getFavorites(`https://kinopoiskapiunofficial.tech/api/v2.2/films/${id}`);
-  });
-  console.log("favorites");
-});
+function getLikedMovies() {
+  return JSON.parse(localStorage.getItem("likedMovies")) || [];
+}
+
+// cheking if movie is in fav
+
+// function isFavourite(movieId) {
+//   const likedMovies = getLikedMovies();
+//   return likedMovies.includes(movieId);
+// }
+
+// function toggleFavourite(movieId, movieTitle) {
+//   let likedMovies = getLikedMovies();
+//   if (isFavourite(filmID)) {
+//     likedMovies = likedMovies.filter((id) => id !== filmId);
+//     alert(`"${filmTitle}" removed from Favorites`);
+//   } else {
+//     likedMovies.push(movieId);
+//     alert(`"${filmTitle}" added to Favorites`);
+//   }
+//   localStorage.setItem("favorites", JSON.stringify(likedMovies));
+// }
+// function getLikedMovies() {
+//   return JSON.parse(localStorage.getItem("likedMovies")) || [];
+// }
+
+// function getFavoriteMovies() {
+//   return JSON.parse(localStorage.getItem("favoriteMovies")) || [];
+// }
+
+// movies.addEventListener("click", (e) => {
+//   if (e.target.id === "heart") {
+//     e.target.classList.toggle(".heart-active");
+//     //const movieEl = e.target.closest("movie");
+//   }
+//   if (e.target.classList.contains("heart-active")) {
+//     localStorage.setItem("imdbId", JSON.stringify(moviesIdArray));
+//   } else {
+//     moviesIdArray = moviesIdArray.filter((item) => {
+//       item !== movieEl("imdbId");
+//       btn_fav.classList.remove(".heart-active");
+//     });
+//     localStorage.setItem("imdbId", JSON.stringify(moviesIdArray));
+//   }
+// });
+// ////
