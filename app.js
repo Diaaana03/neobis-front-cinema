@@ -106,11 +106,12 @@ function showMovies(data) {
 
   const movies = data.items || data.films || data.releases || "No movies found";
 
-  localStorage.setItem("movies", movies);
+  localStorage.setItem("movies", JSON.stringify(movies));
 
   movies.forEach((movie) => {
     const movieEl = document.createElement("div");
     movieEl.classList.add("movie");
+    movieEl.setAttribute("id", movie.filmId || movie.kinopoiskId);
     movieEl.innerHTML = `
         <div class="movie__cover-inner">
         <img
@@ -139,33 +140,37 @@ function showMovies(data) {
       </div>
         `;
     moviesEl.appendChild(movieEl);
-    const btn_fav = document.getElementById("heart");
-    console.lof(btn_fav);
-    btn_fav.addEventListener("click", (e) => {
-      e.preventDefault();
-      console.log(e.target.value);
-      const allMovies = localStorage.getItem("movies");
-      // movies.innerHTML = "";
-      allMovies.filter((imdbId) => {
-        getFavorites(`${baseUrl}${imdbId}`);
-      });
-      console.log("favorites");
-    });
+    addToFavorites();
+  });
+}
+
+function addToFavorites(id) {
+  const btn_fav = document.getElementById("heart");
+  console.log(btn_fav);
+
+  btn_fav.addEventListener("click", (e) => {
+    e.preventDefault();
+    console.log(e.target.value);
+    const allMovies = localStorage.getItem("movies");
+    // movies.innerHTML = "";
+    // allMovies.filter((id) => {
+    //   getFavorites(`${baseUrl}${id}`);
+    // });
+    console.log(e.target);
+    const movieEl = e.target.closest("movie");
+    console.log(movieEl);
   });
 }
 
 /////Favourites movies
 
-const btn_fav = document.getElementById("heart");
-console.lof(btn_fav);
+// function setLikedMovies(likedMovies) {
+//   localStorage.setItem("likedMovies", JSON.stringify(likedMovies));
+// }
 
-function setLikedMovies(likedMovies) {
-  localStorage.setItem("likedMovies", JSON.stringify(likedMovies));
-}
-
-function getLikedMovies() {
-  return JSON.parse(localStorage.getItem("likedMovies")) || [];
-}
+// function getLikedMovies() {
+//   return JSON.parse(localStorage.getItem("likedMovies")) || [];
+// }
 
 // cheking if movie is in fav
 
