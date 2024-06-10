@@ -184,6 +184,6 @@ body {
   transition: all 0.5s ease-in-out;
 }
 
-.heart-active {
+.liked {
   border-image: radial-gradient(rgb(255, 20, 20) 69%, #0000 0%) 84.5% / 50%;
 }
